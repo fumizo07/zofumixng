@@ -5,6 +5,9 @@ server:
   limiter: false
 ui:
   default_theme: simple
+  favicons:
+    # 'none' / 'duckduckgo' / 'google' から選択
+    resolver: duckduckgo
 search:
   safe_search: 1
 engines:
