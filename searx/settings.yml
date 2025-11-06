@@ -40,7 +40,7 @@ search:
   autocomplete_min: 4
   # backend for the favicon near URL in search results.
   # Available resolvers: "allesedv", "duckduckgo", "google", "yandex" - leave blank to turn it off by default.
-  favicon_resolver: ""
+  favicon_resolver: "duckduckgo"
   # Default search language - leave blank to detect from browser information or
   # use codes from 'languages.py'
   default_lang: "auto"
@@ -337,97 +337,97 @@ categories_as_tabs:
   social media:
 
 engines:
-  - name: 360search
-    engine: 360search
-    shortcut: 360so
-    disabled: true
+#  - name: 360search
+#    engine: 360search
+#    shortcut: 360so
+#    disabled: true
 
-  - name: 360search videos
-    engine: 360search_videos
-    shortcut: 360sov
-    disabled: true
+#  - name: 360search videos
+#    engine: 360search_videos
+#    shortcut: 360sov
+#    disabled: true
 
-  - name: 9gag
-    engine: 9gag
-    shortcut: 9g
-    disabled: true
+#  - name: 9gag
+#    engine: 9gag
+#    shortcut: 9g
+#    disabled: true
 
-  - name: acfun
-    engine: acfun
-    shortcut: acf
-    disabled: true
+#  - name: acfun
+#    engine: acfun
+#    shortcut: acf
+#    disabled: true
 
-  - name: adobe stock
-    engine: adobe_stock
-    shortcut: asi
-    categories: ["images"]
+#  - name: adobe stock
+#    engine: adobe_stock
+#    shortcut: asi
+#    categories: ["images"]
     # https://docs.searxng.org/dev/engines/online/adobe_stock.html
-    adobe_order: relevance
-    adobe_content_types: ["photo", "illustration", "zip_vector", "template", "3d", "image"]
-    timeout: 6
-    disabled: true
+#    adobe_order: relevance
+#    adobe_content_types: ["photo", "illustration", "zip_vector", "template", "3d", "image"]
+#    timeout: 6
+#    disabled: true
 
-  - name: adobe stock video
-    engine: adobe_stock
-    shortcut: asv
-    network: adobe stock
-    categories: ["videos"]
-    adobe_order: relevance
-    adobe_content_types: ["video"]
-    timeout: 6
-    disabled: true
+#  - name: adobe stock video
+#    engine: adobe_stock
+#    shortcut: asv
+#    network: adobe stock
+#    categories: ["videos"]
+#    adobe_order: relevance
+#    adobe_content_types: ["video"]
+#    timeout: 6
+#   disabled: true
 
-  - name: adobe stock audio
-    engine: adobe_stock
-    shortcut: asa
-    network: adobe stock
-    categories: ["music"]
-    adobe_order: relevance
-    adobe_content_types: ["audio"]
-    timeout: 6
-    disabled: true
+#  - name: adobe stock audio
+#    engine: adobe_stock
+#    shortcut: asa
+#    network: adobe stock
+#    categories: ["music"]
+#    adobe_order: relevance
+#    adobe_content_types: ["audio"]
+#    timeout: 6
+#    disabled: true
 
-  - name: alexandria
-    engine: json_engine
-    shortcut: alx
-    categories: general
-    paging: true
-    search_url: https://api.alexandria.org/?a=1&q={query}&p={pageno}
-    results_query: results
-    title_query: title
-    url_query: url
-    content_query: snippet
-    timeout: 1.5
-    disabled: true
-    about:
-      website: https://alexandria.org/
-      official_api_documentation: https://github.com/alexandria-org/alexandria-api/raw/master/README.md
-      use_official_api: true
-      require_api_key: false
-      results: JSON
+#  - name: alexandria
+#    engine: json_engine
+#    shortcut: alx
+#    categories: general
+#    paging: true
+#    search_url: https://api.alexandria.org/?a=1&q={query}&p={pageno}
+#    results_query: results
+#    title_query: title
+#    url_query: url
+#    content_query: snippet
+#    timeout: 1.5
+#    disabled: true
+#    about:
+#      website: https://alexandria.org/
+#      official_api_documentation: https://github.com/alexandria-org/alexandria-api/raw/master/README.md
+#     use_official_api: true
+#     require_api_key: false
+#      results: JSON
 
-  - name: astrophysics data system
-    engine: astrophysics_data_system
-    shortcut: ads
+#  - name: astrophysics data system
+#    engine: astrophysics_data_system
+#    shortcut: ads
     # read https://docs.searxng.org/dev/engines/online/astrophysics_data_system.html
-    api_key: ""
-    inactive: true
+#    api_key: ""
+#    inactive: true
 
-  - name: alpine linux packages
-    engine: alpinelinux
-    disabled: true
-    shortcut: alp
+#  - name: alpine linux packages
+#    engine: alpinelinux
+#    disabled: true
+#    shortcut: alp
 
-  - name: annas archive
-    engine: annas_archive
-    disabled: true
-    shortcut: aa
-    timeout: 5
+#  - name: annas archive
+#    engine: annas_archive
+#    disabled: true
+#    shortcut: aa
+#    timeout: 5
 
-  - name: ansa
-    engine: ansa
-    shortcut: ans
-    disabled: true
+#  - name: ansa
+#    engine: ansa
+#    shortcut: ans
+#    disabled: true
 
   # - name: annas articles
   #   engine: annas_archive
