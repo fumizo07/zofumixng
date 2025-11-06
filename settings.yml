@@ -6,10 +6,23 @@ server:
 ui:
   default_theme: simple
   favicons:
-    # 'none' / 'duckduckgo' / 'google' から選択
     resolver: duckduckgo
 search:
-  safe_search: 1
+  safe_search: 0
 engines:
   - name: yandex
     disabled: true
+  - name: bing
+    engine: bing
+  - name: google
+    engine: google
+    timeout: 2.0
+  - name: duckduckgo
+    engine: duckduckgo
+    timeout: 2.0
+  - name: startpage
+    engine: startpage
+    timeout: 2.0
+  - name: brave
+    engine: brave
+    timeout: 2.0
