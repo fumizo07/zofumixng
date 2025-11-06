@@ -1,0 +1,12 @@
+use_default_settings: true
+server:
+  secret_key: "CHANGE_ME"   # 実際はRenderの環境変数で上書き
+  image_proxy: true
+  limiter: false
+ui:
+  default_theme: simple
+search:
+  safe_search: 1
+engines:
+  - name: yandex
+    disabled: true
