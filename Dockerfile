@@ -10,6 +10,6 @@ ENV SEARXNG_BIND_ADDRESS=0.0.0.0
 # ENV SEARXNG_SECRET=
 
 # （任意）自前設定に差し替える場合は同名パスへコピー
-# COPY settings.yml /etc/searxng/settings.yml
+COPY settings.yml /etc/searxng/settings.yml
 
 # 公式イメージのデフォルトCMD/ENTRYPOINTのままでOK（uWSGIで起動）
