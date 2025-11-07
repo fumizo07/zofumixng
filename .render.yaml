@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: zofumixng
+    env: docker
+    rootDir: .               # ← リポジトリ直下をビルドコンテキストに固定
+    dockerfilePath: Render.Dockerfile  # ← 使うDockerfileを明示
