@@ -47,6 +47,12 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '' \
   '# 使うエンジンだけ定義（ここに書いたもの“だけ”有効）' \
   'engines:' \
+　'    keep_only:' \
+  '      - bing' \
+  '      - brave' \
+  '      - google' \
+  '      - duckduckgo' \
+  '      - startpage' \
   '  - name: bing' \
   '    engine: bing' \
   '    timeout: 2.0' \
