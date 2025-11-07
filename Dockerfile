@@ -28,6 +28,14 @@ ENV SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
 RUN mkdir -p /etc/searxng && printf '%s\n' \
   'use_default_settings: true' \
   '' \
+　'engines:' \
+　'    keep_only:' \
+  '      - bing' \
+  '      - brave' \
+  '      - google' \
+  '      - duckduckgo' \
+  '      - startpage' \
+  '' \
   'server:' \
   '  limiter: false' \
   '  image_proxy: false' \
@@ -47,12 +55,6 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '' \
   '# 使うエンジンだけ定義（ここに書いたもの“だけ”有効）' \
   'engines:' \
-　'    keep_only:' \
-  '      - bing' \
-  '      - brave' \
-  '      - google' \
-  '      - duckduckgo' \
-  '      - startpage' \
   '  - name: bing' \
   '    engine: bing' \
   '    timeout: 2.0' \
