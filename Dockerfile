@@ -30,7 +30,7 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '  engines:' \
   '    keep_only:' \
   '      - bing' \
-　'      - brave' \
+  '      - brave' \
   '      - google' \
   '      - duckduckgo' \
   '      - startpage' \
