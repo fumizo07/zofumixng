@@ -163,50 +163,15 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '    timeout: 2.5' \
   > /etc/searxng/settings.yml
 
-# モバイル時のみ: 動画レイアウトを縦積み＆時間バッジを右下固定
-RUN printf '%s\n' \
-  '/* === custom: mobile-only video layout (scoped) === */' \
-  '@media (max-width: 768px) {' \
-  '  .result-videos.category-videos { display:block; overflow:hidden; }' \
-  '  .result-videos.category-videos::after { content:""; display:block; clear:both; }' \
-  '' \
-  '  /* サムネ・本文・ヘッダなどのfloatを無効化＆フル幅化 */' \
-  '  .result-videos.category-videos .thumbnail,' \
-  '  .result-videos.category-videos .thumb,' \
-  '  .result-videos.category-videos .img,' \
-  '  .result-videos.category-videos .content,' \
-  '  .result-videos.category-videos .result-content,' \
-  '  .result-videos.category-videos .result-header,' \
-  '  .result-videos.category-videos .engines,' \
-  '  .result-videos.category-videos .infobox {' \
-  '    float:none !important;' \
-  '    width:100% !important;' \
-  '    max-width:100% !important;' \
-  '  }' \
-  '' \
-  '  /* サムネ→下に本文。バッジ固定用にrelative */' \
-  '  .result-videos.category-videos .thumbnail,' \
-  '  .result-videos.category-videos .thumb,' \
-  '  .result-videos.category-videos .img { position:relative; margin:0 0 10px 0; }' \
-  '  .result-videos.category-videos .thumbnail img,' \
-  '  .result-videos.category-videos .thumb img,' \
-  '  .result-videos.category-videos .img img { width:100%; height:auto; display:block; }' \
-  '' \
-  '  /* 再生時間などのduration系をサムネ右下に絶対配置 */' \
-  '  .result-videos.category-videos .thumbnail .duration,' \
-  '  .result-videos.category-videos .thumb .duration,' \
-  '  .result-videos.category-videos .img .duration,' \
-  '  .result-videos.category-videos [class*="duration"] {' \
-  '    position:absolute; right:8px; bottom:8px;' \
-  '    float:none !important;' \
-  '    display:inline-block; padding:2px 6px;' \
-  '    background:rgba(0,0,0,.75); color:#fff; border-radius:4px;' \
-  '    font-size:12px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' \
-  '  }' \
-  '' \
-  '  /* 余白の最適化 */' \
-  '  .result-videos.category-videos .result-header { margin:0 0 6px; }' \
-  '  .result-videos.category-videos .content p { margin:0 0 10px; }' \
-  '}' \
-  >> /usr/local/searxng/searx/static/themes/simple/css/style.css
-
+# --- Simpleテーマの本番CSSへモバイル動画レイアウトを上書き追記 ---
+# LTR/RTL の両方に追記して確実に当てる
+RUN for f in /usr/local/searxng/searx/static/themes/simple/css/searxng*.min.css; do \
+  printf '%s\n' \
+  '/* custom: mobile-only video layout (scoped) */' \
+  '@media (max-width: 768px){' \
+  '  .result a.thumbnail_link{margin-top:0!important;margin-right:0!important;width:100%!important;}' \
+  '  .result-videos a.thumbnail_link img.thumbnail{width:100%!important;max-width:100%!important;}' \
+  '  .result h3{padding:10px 0!important;clear:both!important;}' \
+  '  .result a.thumbnail_link .thumbnail_length{right:0!important;}' \
+  '}' >> "$f"; \
+done
