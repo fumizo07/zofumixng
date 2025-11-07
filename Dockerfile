@@ -163,57 +163,50 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '    timeout: 2.5' \
   > /etc/searxng/settings.yml
 
-  # --- mobile video layout: float無効化＋縦積み＋時間バッジを右下固定 ---
+# モバイル時のみ: 動画レイアウトを縦積み＆時間バッジを右下固定
 RUN printf '%s\n' \
-  '/* === custom: mobile-only video layout override === */' \
+  '/* === custom: mobile-only video layout (scoped) === */' \
   '@media (max-width: 768px) {' \
-  '  /* コンテナは縦積み。既存floatの影響をすべて断つ */' \
-  '  body.category-videos .result { display:block; overflow:hidden; }' \
-  '  body.category-videos .result::after { content:""; display:block; clear:both; }' \
+  '  .result-videos.category-videos { display:block; overflow:hidden; }' \
+  '  .result-videos.category-videos::after { content:""; display:block; clear:both; }' \
   '' \
-  '  /* よくあるクラス名を網羅してfloat解除＆幅100% */' \
-  '  body.category-videos .result .thumbnail,' \
-  '  body.category-videos .result .thumb,' \
-  '  body.category-videos .result .img,' \
-  '  body.category-videos .result .content,' \
-  '  body.category-videos .result .result-content,' \
-  '  body.category-videos .result .result-header,' \
-  '  body.category-videos .result .infobox,' \
-  '  body.category-videos .result .engines {' \
+  '  /* サムネ・本文・ヘッダなどのfloatを無効化＆フル幅化 */' \
+  '  .result-videos.category-videos .thumbnail,' \
+  '  .result-videos.category-videos .thumb,' \
+  '  .result-videos.category-videos .img,' \
+  '  .result-videos.category-videos .content,' \
+  '  .result-videos.category-videos .result-content,' \
+  '  .result-videos.category-videos .result-header,' \
+  '  .result-videos.category-videos .engines,' \
+  '  .result-videos.category-videos .infobox {' \
   '    float:none !important;' \
   '    width:100% !important;' \
   '    max-width:100% !important;' \
   '  }' \
   '' \
-  '  /* サムネは上、本文は下。サムネを相対位置にしてバッジを固定できるようにする */' \
-  '  body.category-videos .result .thumbnail,' \
-  '  body.category-videos .result .thumb,' \
-  '  body.category-videos .result .img {' \
-  '    position:relative;' \
-  '    margin:0 0 10px 0;' \
-  '  }' \
-  '  body.category-videos .result .thumbnail img,' \
-  '  body.category-videos .result .thumb img,' \
-  '  body.category-videos .result .img img {' \
-  '    width:100%; height:auto; display:block;' \
-  '  }' \
+  '  /* サムネ→下に本文。バッジ固定用にrelative */' \
+  '  .result-videos.category-videos .thumbnail,' \
+  '  .result-videos.category-videos .thumb,' \
+  '  .result-videos.category-videos .img { position:relative; margin:0 0 10px 0; }' \
+  '  .result-videos.category-videos .thumbnail img,' \
+  '  .result-videos.category-videos .thumb img,' \
+  '  .result-videos.category-videos .img img { width:100%; height:auto; display:block; }' \
   '' \
-  '  /* 動画の長さなど、duration系の要素を右下に絶対配置（クラス名差異に広く対応） */' \
-  '  body.category-videos .result .thumbnail .duration,' \
-  '  body.category-videos .result .thumb .duration,' \
-  '  body.category-videos .result .img .duration,' \
-  '  body.category-videos .result [class*="duration"] {' \
+  '  /* 再生時間などのduration系をサムネ右下に絶対配置 */' \
+  '  .result-videos.category-videos .thumbnail .duration,' \
+  '  .result-videos.category-videos .thumb .duration,' \
+  '  .result-videos.category-videos .img .duration,' \
+  '  .result-videos.category-videos [class*="duration"] {' \
   '    position:absolute; right:8px; bottom:8px;' \
   '    float:none !important;' \
-  '    display:inline-block;' \
-  '    padding:2px 6px;' \
-  '    background:rgba(0,0,0,.75); color:#fff;' \
-  '    border-radius:4px; font-size:12px; line-height:1;' \
-  '    max-width:90%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' \
+  '    display:inline-block; padding:2px 6px;' \
+  '    background:rgba(0,0,0,.75); color:#fff; border-radius:4px;' \
+  '    font-size:12px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' \
   '  }' \
   '' \
   '  /* 余白の最適化 */' \
-  '  body.category-videos .result .result-header { margin:0 0 6px; }' \
-  '  body.category-videos .result .content p { margin:0 0 10px; }' \
+  '  .result-videos.category-videos .result-header { margin:0 0 6px; }' \
+  '  .result-videos.category-videos .content p { margin:0 0 10px; }' \
   '}' \
   >> /usr/local/searxng/searx/static/themes/simple/css/style.css
+
