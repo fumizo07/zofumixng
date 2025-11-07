@@ -67,6 +67,8 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '      - yahoo news' \
   '      # 地図' \
   '      - openstreetmap' \
+  '      - nominatim' \
+  '      - photon' \
   '      # 音楽' \
   '      - bandcamp' \
   '      - soundcloud' \
@@ -147,6 +149,10 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '  # マップ系' \
   '  - name: openstreetmap' \
   '    timeout: 3.0' \
+  '  - name: nominatim' \
+  '    timeout: 3.0' \
+  '  - name: photon' \
+  '    timeout: 3.0' \
   '  # 音楽系' \
   '  - name: bandcamp' \
   '    timeout: 2.5' \
@@ -156,3 +162,26 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '  - name: reddit' \
   '    timeout: 2.5' \
   > /etc/searxng/settings.yml
+
+  # スマホ時の動画レイアウトを縦積みに（PCは従来どおり）
+RUN printf '%s\n' \
+  '/* --- custom: mobile video layout --- */' \
+  '@media (max-width: 768px) {' \
+  '  body.category-videos .result {' \
+  '    display: block; /* 縦積み */' \
+  '  }' \
+  '  body.category-videos .result .thumbnail {' \
+  '    width: 100%;' \
+  '    max-width: 100%;' \
+  '    margin: 0 0 8px 0; /* 下に余白 */' \
+  '  }' \
+  '  body.category-videos .result .thumbnail img {' \
+  '    width: 100%;' \
+  '    height: auto;' \
+  '    display: block;' \
+  '  }' \
+  '  body.category-videos .result .content {' \
+  '    width: 100%;' \
+  '  }' \
+  '}' \
+  >> /usr/local/searxng/searx/static/themes/simple/css/style.css
