@@ -24,6 +24,21 @@ ENV SEARXNG_BIND_ADDRESS=0.0.0.0
 # これを明示して「この設定を読め」と強制
 ENV SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
 
+# ★ 追加：favicons.toml を生成（UIで選択肢を出す）
+RUN mkdir -p /etc/searxng && printf '%s\n' \
+  '[favicons]' \
+  'cfg_schema = 1' \
+  '' \
+  '[favicons.proxy]' \
+  'max_age = 5184000' \
+  '' \
+  '# 複数の resolver を登録すると UI に選択肢が出る' \
+  '[favicons.proxy.resolver_map]' \
+  '"duckduckgo" = "searx.favicons.resolvers.duckduckgo"' \
+  '"google"    = "searx.favicons.resolvers.google"' \
+  > /etc/searxng/favicons.toml
+
+
 # settings.yml を“生成”して配置（ここを書き換えれば再デプロイで反映）
 RUN mkdir -p /etc/searxng && printf '%s\n' \
   'use_default_settings:' \
@@ -42,12 +57,13 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '      - duckduckgo images' \
   '      - startpage images' \
   '      # 動画' \
-  '      - youtube' \
-  '      - google videos' \
   '      - bing videos' \
+  '      - google videos' \
+  '      - youtube' \
   '      # ニュース' \
-  '      - google news' \
   '      - bing news' \
+  '      - brave news' \
+  '      - google news' \
   '      - yahoo news' \
   '      # 地図' \
   '      - openstreetmap' \
@@ -94,27 +110,37 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '    disabled: true' \
   '  - name: brave' \
   '    timeout: 2.0' \
+  '  - name: duckduckgo' \
+  '    timeout: 2.0' \
   '  - name: google' \
   '    timeout: 2.0' \
   '    disabled: true' \
-  '  - name: duckduckgo' \
-  '    timeout: 2.0' \
   '  - name: startpage' \
   '    timeout: 2.0' \
   '  # 画像系の応答改善（軽いタイムアウト上げ）' \
+  '  - name: bing images' \
+  '    timeout: 3.0' \
+  '  - name: brave images' \
+  '    timeout: 3.0' \
   '  - name: duckduckgo images' \
   '    timeout: 3.0' \
   '  - name: google images' \
   '    timeout: 3.0' \
-  '  - name: bing images' \
+  '  - name: startpage images' \
   '    timeout: 3.0' \
   '  # 動画系の応答改善（軽いタイムアウト上げ）' \
+  '  - name: bing videos' \
+  '    timeout: 2.5' \
+  '  - name: google videos' \
+  '    timeout: 2.5' \
   '  - name: youtube' \
   '    timeout: 2.5' \
   '  # ニュース系' \
-  '  - name: google news' \
-  '    timeout: 2.5' \
   '  - name: bing news' \
+  '    timeout: 2.5' \
+  '  - name: brave news' \
+  '    timeout: 2.5' \
+  '  - name: google news' \
   '    timeout: 2.5' \
   '  - name: yahoo news' \
   '    timeout: 2.5' \
