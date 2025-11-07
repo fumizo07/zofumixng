@@ -164,14 +164,19 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   > /etc/searxng/settings.yml
 
 # --- Simpleテーマの本番CSSへモバイル動画レイアウトを上書き追記 ---
-# LTR/RTL の両方に追記して確実に当てる
-RUN for f in /usr/local/searxng/searx/static/themes/simple/css/searxng*.min.css; do \
-  printf '%s\n' \
-  '/* custom: mobile-only video layout (scoped) */' \
-  '@media (max-width: 768px){' \
-  '  .result a.thumbnail_link{margin-top:0!important;margin-right:0!important;width:100%!important;}' \
-  '  .result-videos a.thumbnail_link img.thumbnail{width:100%!important;max-width:100%!important;}' \
-  '  .result h3{padding:10px 0!important;clear:both!important;}' \
-  '  .result a.thumbnail_link .thumbnail_length{right:0!important;}' \
-  '}' >> "$f"; \
-done
+# LTR/RTL 両方に追記し、追記後に .gz も再生成して配信に反映
+RUN set -e; \
+  for f in /usr/local/searxng/searx/static/themes/simple/css/searxng*.min.css; do \
+    printf '%s\n' \
+    '/* custom: mobile-only video layout (scoped) */' \
+    '@media (max-width: 768px){' \
+    '  .result a.thumbnail_link{margin-top:0!important;margin-right:0!important;width:100%!important;}' \
+    '  .result-videos a.thumbnail_link img.thumbnail{width:100%!important;max-width:100%!important;}' \
+    '  .result h3{padding:10px 0!important;clear:both!important;}' \
+    '  .result a.thumbnail_link .thumbnail_length{right:0!important;}' \
+    '}' \
+    >> "$f"; \
+    # ← ここが肝。圧縮版を上書き生成し直す
+    gzip -f -c "$f" > "$f.gz"; \
+  done
+
