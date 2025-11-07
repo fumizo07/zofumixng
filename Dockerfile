@@ -36,10 +36,9 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '  default_theme: simple' \
   '  default_locale: ja' \
   '  infinite_scroll: true' \
-  '  favicons:' \
-  '    resolver: duckduckgo' \
   '' \
   'search:' \
+  '  favicon_resolver: "duckduckgo"' \
   '  safe_search: 0' \
   '  default_lang: ja' \
   '' \
