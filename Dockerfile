@@ -48,6 +48,7 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '      # ニュース' \
   '      - google news' \
   '      - bing news' \
+  '      - yahoo news' \
   '      # 地図' \
   '      - openstreetmap' \
   '      # 音楽' \
@@ -87,6 +88,7 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '' \
   '# 使うエンジンだけ定義（ここに書いたもの“だけ”有効）' \
   'engines:' \
+  '  # 一般' \
   '  - name: bing' \
   '    timeout: 2.0' \
   '    disabled: true' \
@@ -99,24 +101,32 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '    timeout: 2.0' \
   '  - name: startpage' \
   '    timeout: 2.0' \
+  '  # 画像系の応答改善（軽いタイムアウト上げ）' \
   '  - name: duckduckgo images' \
-  '    timeout: 2.0' \
+  '    timeout: 3.0' \
   '  - name: google images' \
-  '    timeout: 2.0' \
+  '    timeout: 3.0' \
   '  - name: bing images' \
-  '    timeout: 2.0' \
+  '    timeout: 3.0' \
+  '  # 動画系の応答改善（軽いタイムアウト上げ）' \
   '  - name: youtube' \
   '    timeout: 2.5' \
+  '  # ニュース系' \
   '  - name: google news' \
   '    timeout: 2.5' \
   '  - name: bing news' \
   '    timeout: 2.5' \
-  '  - name: openstreetmap' \
+  '  - name: yahoo news' \
   '    timeout: 2.5' \
+  '  # マップ系' \
+  '  - name: openstreetmap' \
+  '    timeout: 3.0' \
+  '  # 音楽系' \
   '  - name: bandcamp' \
   '    timeout: 2.5' \
   '  - name: soundcloud' \
   '    timeout: 2.5' \
+  '  # ソーシャルメディア系' \
   '  - name: reddit' \
   '    timeout: 2.5' \
   > /etc/searxng/settings.yml
