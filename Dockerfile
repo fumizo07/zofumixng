@@ -163,25 +163,57 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '    timeout: 2.5' \
   > /etc/searxng/settings.yml
 
-  # スマホ時の動画レイアウトを縦積みに（PCは従来どおり）
+  # --- mobile video layout: float無効化＋縦積み＋時間バッジを右下固定 ---
 RUN printf '%s\n' \
-  '/* --- custom: mobile video layout --- */' \
+  '/* === custom: mobile-only video layout override === */' \
   '@media (max-width: 768px) {' \
-  '  body.category-videos .result {' \
-  '    display: block; /* 縦積み */' \
+  '  /* コンテナは縦積み。既存floatの影響をすべて断つ */' \
+  '  body.category-videos .result { display:block; overflow:hidden; }' \
+  '  body.category-videos .result::after { content:""; display:block; clear:both; }' \
+  '' \
+  '  /* よくあるクラス名を網羅してfloat解除＆幅100% */' \
+  '  body.category-videos .result .thumbnail,' \
+  '  body.category-videos .result .thumb,' \
+  '  body.category-videos .result .img,' \
+  '  body.category-videos .result .content,' \
+  '  body.category-videos .result .result-content,' \
+  '  body.category-videos .result .result-header,' \
+  '  body.category-videos .result .infobox,' \
+  '  body.category-videos .result .engines {' \
+  '    float:none !important;' \
+  '    width:100% !important;' \
+  '    max-width:100% !important;' \
   '  }' \
-  '  body.category-videos .result .thumbnail {' \
-  '    width: 100%;' \
-  '    max-width: 100%;' \
-  '    margin: 0 0 8px 0; /* 下に余白 */' \
+  '' \
+  '  /* サムネは上、本文は下。サムネを相対位置にしてバッジを固定できるようにする */' \
+  '  body.category-videos .result .thumbnail,' \
+  '  body.category-videos .result .thumb,' \
+  '  body.category-videos .result .img {' \
+  '    position:relative;' \
+  '    margin:0 0 10px 0;' \
   '  }' \
-  '  body.category-videos .result .thumbnail img {' \
-  '    width: 100%;' \
-  '    height: auto;' \
-  '    display: block;' \
+  '  body.category-videos .result .thumbnail img,' \
+  '  body.category-videos .result .thumb img,' \
+  '  body.category-videos .result .img img {' \
+  '    width:100%; height:auto; display:block;' \
   '  }' \
-  '  body.category-videos .result .content {' \
-  '    width: 100%;' \
+  '' \
+  '  /* 動画の長さなど、duration系の要素を右下に絶対配置（クラス名差異に広く対応） */' \
+  '  body.category-videos .result .thumbnail .duration,' \
+  '  body.category-videos .result .thumb .duration,' \
+  '  body.category-videos .result .img .duration,' \
+  '  body.category-videos .result [class*="duration"] {' \
+  '    position:absolute; right:8px; bottom:8px;' \
+  '    float:none !important;' \
+  '    display:inline-block;' \
+  '    padding:2px 6px;' \
+  '    background:rgba(0,0,0,.75); color:#fff;' \
+  '    border-radius:4px; font-size:12px; line-height:1;' \
+  '    max-width:90%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' \
   '  }' \
+  '' \
+  '  /* 余白の最適化 */' \
+  '  body.category-videos .result .result-header { margin:0 0 6px; }' \
+  '  body.category-videos .result .content p { margin:0 0 10px; }' \
   '}' \
   >> /usr/local/searxng/searx/static/themes/simple/css/style.css
