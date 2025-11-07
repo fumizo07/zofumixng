@@ -21,23 +21,32 @@ FROM searxng/searxng:latest
 # Renderの割り当てポートに追従
 ENV SEARXNG_PORT=$PORT
 ENV SEARXNG_BIND_ADDRESS=0.0.0.0
+# これを明示して「この設定を読め」と強制
+ENV SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
 
-# settings.yml をコンテナ内に生成（必要に応じて編集可）
+# settings.yml を“生成”して配置（ここを書き換えれば再デプロイで反映）
 RUN mkdir -p /etc/searxng && printf '%s\n' \
   'use_default_settings: true' \
+  '' \
   'server:' \
   '  limiter: false' \
   '  image_proxy: false' \
+  '' \
   'ui:' \
   '  default_theme: simple' \
   '  default_locale: ja' \
   '  infinite_scroll: true' \
   '  favicons:' \
   '    resolver: duckduckgo' \
+  '' \
   'search:' \
   '  safe_search: 0' \
   '  default_lang: ja' \
+  '' \
+  'outgoing:' \
   '  request_timeout: 2.5' \
+  '' \
+  '# 使うエンジンだけ定義（ここに書いたもの“だけ”有効）' \
   'engines:' \
   '  - name: bing' \
   '    engine: bing' \
