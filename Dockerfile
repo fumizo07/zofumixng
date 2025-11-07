@@ -29,6 +29,8 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   'use_default_settings:' \
   '  engines:' \
   '    keep_only:' \
+  '      - bing' \
+　'      - brave' \
   '      - google' \
   '      - duckduckgo' \
   '      - startpage' \
