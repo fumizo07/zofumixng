@@ -55,18 +55,13 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
   '# 使うエンジンだけ定義（ここに書いたもの“だけ”有効）' \
   'engines:' \
   '  - name: bing' \
-  '    engine: bing' \
   '    timeout: 2.0' \
   '  - name: brave' \
-  '    engine: brave' \
-  '    timeout: 2.0' \
-  '  - name: duckduckgo' \
-  '    engine: duckduckgo' \
   '    timeout: 2.0' \
   '  - name: google' \
-  '    engine: google' \
+  '    timeout: 2.0' \
+  '  - name: duckduckgo' \
   '    timeout: 2.0' \
   '  - name: startpage' \
-  '    engine: startpage' \
   '    timeout: 2.0' \
   > /etc/searxng/settings.yml
