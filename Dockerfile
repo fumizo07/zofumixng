@@ -26,12 +26,9 @@ ENV SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
 
 # settings.yml を“生成”して配置（ここを書き換えれば再デプロイで反映）
 RUN mkdir -p /etc/searxng && printf '%s\n' \
-  'use_default_settings: true' \
-  '' \
-　'engines:' \
-　'    keep_only:' \
-  '      - bing' \
-  '      - brave' \
+  'use_default_settings:' \
+  '  engines:' \
+  '    keep_only:' \
   '      - google' \
   '      - duckduckgo' \
   '      - startpage' \
