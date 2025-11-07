@@ -166,7 +166,7 @@ RUN mkdir -p /etc/searxng && printf '%s\n' \
 # --- Simpleテーマの本番CSSへモバイル動画レイアウトを上書き追記 ---
 # LTR/RTL 両方に追記し、追記後に .gz も再生成して配信に反映
 RUN set -e; \
-  for f in /usr/local/searxng/searx/static/themes/simple/css/searxng*.min.css; do \
+  for f in /usr/local/searxng/searx/static/themes/simple/css/searxng-ltr.min.css; do \
     printf '%s\n' \
     '/* custom: mobile-only video layout (scoped) */' \
     '@media (max-width: 768px){' \
@@ -178,5 +178,9 @@ RUN set -e; \
     >> "$f"; \
     # ← ここが肝。圧縮版を上書き生成し直す
     gzip -f -c "$f" > "$f.gz"; \
-  done
+done
 
+RUN set -e; \
+  for f in /usr/local/searxng/searx/static/themes/simple/css/searxng-ltr.min.css; do \
+    test -f "$f.br" && rm -f "$f.br"; \
+done
